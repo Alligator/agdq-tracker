@@ -1,0 +1,78 @@
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,200);
+
+body {
+  font-family: 'Source Sans Pro' sans-serif;
+  background-color: #334;
+  color: #fff;
+}
+
+h1, h2, h3 {
+  color: #cdf;
+  font-family: 'Source Sans Pro' sans-serif;
+  font-weight: bold;
+  text-align: center;
+  font-weight: normal;
+}
+
+h2 {
+  border-bottom: 2px solid #cdf;
+  padding-bottom: 6px;
+  margin-bottom: 16px;
+}
+
+.container {
+  padding-top:    20px;
+  padding-bottom: 20px;
+}
+
+#games {
+  height: 400px;
+  overflow-y: scroll;
+}
+.game-link {
+  cursor: pointer;
+  margin: 0;
+  padding: 2px 1ex;
+}
+.game-link.active {
+  background-color: #cdf;
+  color: #334;
+}
+.game-link:hover {
+  color: #cdf;
+}
+.game-link.active:hover {
+  color: #334;
+}
+
+#game-stats p, #main-stats p {
+  margin:  0;
+  padding: 0;
+  display: inline-block;
+  width: 32%;
+  text-align: center;
+}
+
+a, a:visited {
+  color: #fff;
+}
+a:hover {
+  color: #aef;
+}
+/* #Media Queries
+================================================== */
+
+	/* Smaller than standard 960 (devices and browsers) */
+	@media only screen and (max-width: 959px) {}
+
+	/* Tablet Portrait size to standard 960 (devices and browsers) */
+	@media only screen and (min-width: 768px) and (max-width: 959px) {}
+
+	/* All Mobile Sizes (devices and browser) */
+	@media only screen and (max-width: 767px) {}
+
+	/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+	@media only screen and (min-width: 480px) and (max-width: 767px) {}
+
+	/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+	@media only screen and (max-width: 479px) {}

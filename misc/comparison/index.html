@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <!-- <script type="text/javascript" src="agdq.js"></script> -->
+    <style>
+    body {
+      font: 10px sans-serif;
+    }
+
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: #ccc;
+      shape-rendering: crispEdges;
+    }
+
+    .line {
+      fill: none;
+      stroke-width: 1.5px;
+    }
+
+    .overlay {
+      fill: none;
+      pointer-events: all;
+    }
+
+    .focusline {
+      stroke-width: 1px;
+      fill: none;
+      stroke: #ddd;
+    }
+
+    #main-chart, #games-chart {
+      fill: #999;
+      font-size: 12pt;
+    }
+
+    #main-checkboxes {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    </style>
+    <link rel="stylesheet" href="stylesheets/layout.css" />
+    <title>GDQ Comparsion - alligator</title>
+  </head>
+  <body>
+    <div class="title">
+      <h1><a href="http://gamesdonequick.com/">Games Done Quick</a> Comparsion</h1>
+    </div>
+
+    <div class="container">
+
+      <div class="section">
+        <div class="section-content">
+          <h2>Donations over time</h2>
+          <div id="main-checkboxes"></div>
+          <!-- <div id="main&#45;buttons"> -->
+          <!--   <button id="select&#45;all" type="button">Select All</button> -->
+          <!--   <button id="select&#45;none" type="button">Select None</button> -->
+          <!-- </div> -->
+          <div id="main-stats"></div>
+          <div id="main-chart"></div>
+        </div>
+      </div>
+
+      <h3 class="footer"><a href="http://alligatr.co.uk">alligator 2019</a></h3>
+
+    </div>
+    <script type="text/javascript" src="agdq-comparison.js"></script>
+  </body>
+</html>
+

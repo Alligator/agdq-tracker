@@ -1,0 +1,179 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500);
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f3f3f3;
+  color: #666;
+  font-size: 12pt;
+  padding: 0;
+  margin: 0;
+  line-height: 1.35;
+}
+
+h1, h3 {
+  font-weight: 400;
+}
+h2 {
+  font-weight: 500;
+}
+
+.title {
+}
+h1 {
+  text-align: left;
+  font-size: 18pt;
+  padding: 1em 0;
+  margin: 0 auto;
+  width: 960px;
+  /* border-left: 20px solid #364656; */
+}
+
+h2 {
+  font-size: 12pt;
+}
+
+h3 {
+  font-size: 12pt;
+  margin-top: 0;
+}
+
+.section {
+  margin-bottom: 40px;
+  vertical-align: top;
+  background-color: white;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+}
+.section-content {
+  overflow: hidden;
+  padding: 20px;
+}
+.section-footer {
+  padding: 20px;
+  border-top: 1px solid #ddd;
+  color: #999;
+  font-size: 10pt;
+}
+
+.info-column {
+  width: 47%;
+  display: inline-block;
+  vertical-align: top;
+  line-height: 1.35;
+  padding: 0 10px 0 0;
+}
+
+.section h2 {
+  text-align: left;
+  background-color: white;
+  color: #666;
+  padding: 0 0 10px 0;
+  margin: 0;
+}
+
+.container {
+  width: 960px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+#games {
+  height: 400px;
+}
+#games ul {
+  padding: 0;
+  margin: 0;
+}
+.game {
+  padding: .5em .5em;
+  list-style: none;
+  cursor: pointer;
+  border-bottom: 1px solid #ddd;
+}
+
+.game-link {
+  font-size: 12pt;
+}
+.game-runner {
+  font-size: 10pt;
+}
+
+.game.active {
+  color: #EC407A;
+}
+.game.active:hover {
+  color: #EC407A;
+}
+.game:hover {
+  color: #EC407A;
+}
+.games-list {
+  height: 400px;
+  overflow-y: scroll;
+  width: 30%;
+  float: left;
+}
+.games-list-chart {
+  height: 400px;
+  width: 66%;
+  float: right;
+}
+
+#game-stats p, #main-stats p {
+  margin:  0;
+  padding: 0;
+  display: inline-block;
+  width: 32%;
+  text-align: center;
+  font-size: 12pt;
+}
+
+a, a:visited {
+  color: #EC407A;
+  text-decoration: none;
+}
+a:hover {
+  color: #F48FB1;
+}
+
+.tooltip {   
+  pointer-events: none;
+  position: absolute;           
+  background-color: rgba(245, 245, 245, 0.9);
+  font-size: 10pt;
+  color: white;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  min-width: 150px;
+  max-width: 150px;
+  border-radius: 3px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-around;
+}
+
+.tip-game {
+  margin: 0;
+  padding: .5em 1em 0 1em;
+}
+
+.tip-viewers, .tip-total {
+  padding: .45em 0 .5em 0;
+  display: inline-block;
+  width: 50%;
+  box-sizing: border-box;
+  flex-grow 1;
+}
+.tip-viewers { color: #F8BBD0; }
+.tip-total   { color: #C5CAE9; }
+
+.tip-label {
+  text-transform: lowercase;
+  font-variant: small-caps;
+  flex-grow 0;
+}
+
+.footer {
+  margin-bottom: 40px;
+}
