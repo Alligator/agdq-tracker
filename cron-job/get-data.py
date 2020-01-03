@@ -40,7 +40,7 @@ for i in range(3):
 
 # get donations
 try:
-  j = json.loads(requests.get('https://gamesdonequick.com/tracker/event/MARATHON_NAME?json').text)
+  j = json.loads(requests.get('https://gamesdonequick.com/tracker/event/MARATHON_NAME_FULL?json').text)
   dn = float(j['agg']['amount'])
 except Exception as e:
   sys.stderr.write('donations\n' + str(e))

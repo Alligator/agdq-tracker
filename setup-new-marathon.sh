@@ -11,6 +11,7 @@ echo "setting stuff up for $marathon_nice_name"
 echo "replacing variables in cron-job/get-data.py"
 sed -i \
   -e "s/MARATHON_NAME/$marathon_name/g" \
+  -e "s/MARATHON_NAME_FULL/$marathon_name_full/g" \
   -e "s/START_DATE/$marathon_start_date/g" \
   -e "s/END_DATE/$marathon_end_date/g" \
   -e "s/TWITCH_KEY/$twitch_key/g" \
