@@ -193,7 +193,7 @@ function drawGraph(margin, width, height, parent, dt, gamelines) {
   return svg;
 }
 
-d3.json("sgdq19.json", function(error, data) {
+d3.json("MARATHON_NAME.json", function(error, data) {
   var dt = [];
   var i = 0;
   var v = [];

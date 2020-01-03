@@ -3,6 +3,7 @@ import time
 import sys
 import requests
 import re
+import configparser
 
 import lxml.html
 from datetime import datetime, timedelta
@@ -10,15 +11,13 @@ from dateutil import parser
 
 from pprint import pprint
 
-MARATHON_NAME = 'gdq-test'
-filename = '/var/www/{0}/{0}.json'.format(MARATHON_NAME)
-
-current_time = time.time()
+filename = '/var/www/MARATHON_NAME/MARATHON_NAME.json'
 
 # marathon start and end times go here, so I don't have to worry about turning
 # the cron job on or off at the right time
-start_date = datetime(2019, 6, 23, 16, 20)
-end_date = datetime(2019, 6, 30, 12, 0)
+current_time = time.time()
+start_date = parser.parse('START_DATE')
+end_date = parser.parse('END_DATE')
 if datetime.utcnow() < start_date or datetime.utcnow() > end_date:
   sys.exit(0)
 
@@ -29,7 +28,7 @@ except IOError as e:
 
 # get viewers
 for i in range(3):
-  headers = { 'Client-ID': 'KEY_GOES_HERE' }
+  headers = { 'Client-ID': 'TWITCH_KEY' }
   j = json.loads(requests.get('https://api.twitch.tv/kraken/streams/gamesdonequick', headers=headers, verify=True, timeout=10.0).text)
   try:
     t = j['stream']['viewers']
@@ -41,7 +40,7 @@ for i in range(3):
 
 # get donations
 try:
-  j = json.loads(requests.get('https://gamesdonequick.com/tracker/index/{}?json'.format(MARATHON_NAME)).text)
+  j = json.loads(requests.get('https://gamesdonequick.com/tracker/event/MARATHON_NAME?json').text)
   dn = float(j['agg']['amount'])
 except Exception as e:
   sys.stderr.write('donations\n' + str(e))
