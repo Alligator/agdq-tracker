@@ -11,7 +11,7 @@ from dateutil import parser
 
 from pprint import pprint
 
-filename = '/var/www/MARATHON_NAME/MARATHON_NAME.json'
+filename = '../web/MARATHON_NAME/MARATHON_NAME.json'
 
 # marathon start and end times go here, so I don't have to worry about turning
 # the cron job on or off at the right time
@@ -35,7 +35,7 @@ for i in range(3):
     break
   except Exception as e:
     # write out a null
-    sys.stderr.write('viewers\n' + str(e))
+    sys.stderr.write('viewers ' + str(e) + '\n')
     t = None
 
 # get donations
@@ -43,7 +43,7 @@ try:
   j = json.loads(requests.get('https://gamesdonequick.com/tracker/event/MARATHON_NAME_FULL?json').text)
   dn = float(j['agg']['amount'])
 except Exception as e:
-  sys.stderr.write('donations\n' + str(e))
+  sys.stderr.write('donations' + str(e) + '\n')
   dn = None
 
 current_stats['viewers'].append((current_time, t, dn))
