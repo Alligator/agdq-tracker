@@ -41,6 +41,6 @@ main tracker come marathon time, so there you go.
 , which used the google charts API instead of d3.
 
 `misc/gdq-announce.py` a very simple python script that looks at the json
-output from the tracker and posts a mesasgeto a discord webhook when a new game
-is coming up. i point at a gdq specific channel on a discord server so you can
-always see what's on now and what's up next.
+output from the tracker and posts a message to a discord webhook when a new
+game is coming up. i point it at a gdq specific channel on a discord server so
+people can always see what's on now and what's up next.
