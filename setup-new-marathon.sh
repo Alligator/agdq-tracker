@@ -3,8 +3,14 @@ set -e
 
 . ./config.sh
 
-echo "creating branch $marathon_name"
-git checkout -b $marathon_name
+echo "creating directory $marathon_name"
+mkdir $marathon_name
+
+echo "copying files"
+cp -r cron-job $marathon_name
+cp -r web $marathon_name
+
+cd $marathon_name
 
 echo "setting stuff up for $marathon_nice_name"
 
@@ -30,3 +36,7 @@ echo "replacing variables in web/agdq.d3.js"
 sed -i \
   -e "s/MARATHON_NAME/$marathon_name/g" \
   ./web/agdq.d3.js
+
+echo "setting up pipenv"
+cd cron-job
+pipenv install
