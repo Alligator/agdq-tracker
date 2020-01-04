@@ -11,7 +11,7 @@ from dateutil import parser
 
 from pprint import pprint
 
-filename = '../web/MARATHON_NAME/MARATHON_NAME.json'
+filename = '../web/MARATHON_NAME.json'
 
 # marathon start and end times go here, so I don't have to worry about turning
 # the cron job on or off at the right time
