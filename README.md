@@ -39,3 +39,8 @@ main tracker come marathon time, so there you go.
 
 `misc/original-tracker` contains the code for the [original tracker](https://irc.alligatr.co.uk/sgdq)
 , which used the google charts API instead of d3.
+
+`misc/gdq-announce.py` a very simple python script that looks at the json
+output from the tracker and posts a mesasgeto a discord webhook when a new game
+is coming up. i point at a gdq specific channel on a discord server so you can
+always see what's on now and what's up next.
