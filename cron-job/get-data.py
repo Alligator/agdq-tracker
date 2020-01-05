@@ -30,7 +30,7 @@ except IOError as e:
 for i in range(3):
   try:
     headers = { 'Client-ID': 'TWITCH_KEY' }
-    j = json.loads(requests.get('https://api.twitch.tv/helix/streams/?user_login=gamesdonequick', headers=headers, verify=True, timeout=10.0).text)
+    j = json.loads(requests.get('https://api.twitch.tv/helix/streams?user_login=gamesdonequick', headers=headers, verify=True, timeout=10.0).text)
     t = j['data'][0]['viewer_count']
     break
   except Exception as e:
