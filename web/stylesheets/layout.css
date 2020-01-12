@@ -2,8 +2,8 @@
 
 body {
   font-family: 'Roboto', sans-serif;
-  background-color: #f3f3f3;
-  color: #666;
+  background-color: #282c34;
+  color: #dcdfe4;
   font-size: 12pt;
   padding: 0;
   margin: 0;
@@ -25,7 +25,6 @@ h1 {
   padding: 1em 0;
   margin: 0 auto;
   width: 960px;
-  /* border-left: 20px solid #364656; */
 }
 
 h2 {
@@ -40,9 +39,7 @@ h3 {
 .section {
   margin-bottom: 40px;
   vertical-align: top;
-  background-color: white;
-  /* box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); */
-  /* border-radius: 3px; */
+  background-color: rgba(255, 255, 255, 0.1);
 }
 .section-content {
   overflow: hidden;
@@ -50,7 +47,6 @@ h3 {
 }
 .section-footer {
   padding: 20px;
-  border-top: 1px solid #ddd;
   color: #999;
 }
 
@@ -64,8 +60,6 @@ h3 {
 
 .section h2 {
   text-align: left;
-  background-color: white;
-  color: #666;
   padding: 0 0 10px 0;
   margin: 0;
 }
@@ -84,10 +78,13 @@ h3 {
   margin: 0;
 }
 .game {
-  padding: .5em .5em;
+  margin: 1px 8px 8px 1px;
+  padding: 8px;
   list-style: none;
   cursor: pointer;
-  border-bottom: 1px solid #ddd;
+  box-sizing: border-box;
+  border: rgba(0, 0, 0, 0) 1px solid;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .game-link {
@@ -98,9 +95,8 @@ h3 {
 }
 
 .game.active,
-.game.active:hover,
 .game:hover {
-  color: #f86;
+  background-color: rgba(255, 255, 255, 0.2);
 }
 .games-list {
   height: 400px;
@@ -124,11 +120,11 @@ h3 {
 }
 
 a, a:visited {
-  color: #f86;
+  color: #61afef;
   text-decoration: none;
 }
 a:hover {
-  color: #fc6;
+  color: #81c8ff;
 }
 
 .tooltip {   
@@ -142,7 +138,6 @@ a:hover {
   text-align: center;
   min-width: 200px;
   max-width: 200px;
-  /* border-radius: 3px; */
 }
 
 .tip-game {
@@ -156,8 +151,6 @@ a:hover {
   width: 50%;
   box-sizing: border-box;
 }
-/* .tip-viewers { color: #00e9d4; } */
-/* .tip-total   { color: #feba42; } */
 
 .tip-label {
   text-transform: lowercase;
@@ -173,5 +166,5 @@ a:hover {
 }
 
 .axis-label {
-  fill: rgba(0, 0, 0, 0.3);
+  fill: rgba(255, 255, 255, 0.5);
 }

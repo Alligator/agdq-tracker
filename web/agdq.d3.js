@@ -1,7 +1,7 @@
 'use strict';
 var fg = '#444';
 var bg = '#eee';
-var colors = ['#fa6', '#f6a'];
+var colors = ['#61afef', '#e5c07b'];
 
 function drawGraph(margin, width, height, parent, dt, gamelines) {
   var x = d3.time.scale().range([0, width]);
@@ -44,7 +44,7 @@ function drawGraph(margin, width, height, parent, dt, gamelines) {
     .attr('class', 'focusline');
   var focusLine = focusLineG.append('line')
     .style('display', 'none')
-    .style('stroke', '#777');
+    .style('stroke', '#dcdfe4');
   var lineg = svg.append('g').attr("pointer-events", "none").attr('opacity', 0);
 
   svg.append("g")
@@ -157,7 +157,7 @@ function drawGraph(margin, width, height, parent, dt, gamelines) {
     for (var i = 0; i < gamelines.length; i++) {
       lines.push(lineg
         .append('line')
-        .attr('class', 'focusline')
+        .attr('class', 'gameline')
         .attr('x1', x(gamelines[i][0]))
         .attr('x2', x(gamelines[i][0]))
         .attr('y1', 0)
@@ -221,7 +221,7 @@ d3.json("MARATHON_NAME.json", function(error, data) {
       i++;
     });
 
-    var margin = {top: 20, right: 80, bottom: 30, left: 70},
+    var margin = {top: 20, right: 100, bottom: 30, left: 70},
         width = 900 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
 
@@ -285,7 +285,7 @@ function addGames(list, igd) {
       $('#games-chart').html('No data.<br /><br />Either the game has not been played yet or something went wrong.');
     } else {
       $('#games-chart').html('');
-      var margin = {top: 20, right: 80, bottom: 30, left: 70},
+      var margin = {top: 20, right: 100, bottom: 30, left: 70},
           width = 587 - margin.left - margin.right,
           height = 380 - margin.top - margin.bottom;
       var svg = drawGraph(margin, width, height, "#games-chart", data);
