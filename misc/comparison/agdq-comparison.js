@@ -1,11 +1,16 @@
-var colors = ['#00429d', '#2f5aa8', '#4872b2', '#5e8bbc', '#75a5c4', '#8ebfc9', '#e6ac9b', '#e98583', '#e15f6d', '#d03b59', '#b61748', '#93003a'];
+var colors = ['#e45649', '#e06c75','#50a14f', '#98c379','#c18401', '#e5c07b','#0184bc', '#61afef','#a626a4', '#c678dd','#0997b3', '#56b6c2', '#282c34']
 var i = 0;
 loadData({
+  agdq20: {
+    url: '/agdq20/agdq20.json',
+    start: new Date(2020, 0, 5, 15, 0),
+    color: colors[i++],
+    highlight: true,
+  },
   sgdq19: {
     url: '/sgdq19/sgdq19.json',
     start: new Date(2019, 5, 23, 16, 30),
     color: colors[i++],
-    highlight: true,
   },
   agdq19: {
     url: '/agdq19/agdq19.json',
@@ -66,9 +71,19 @@ loadData({
   drawCheckboxes(state);
 });
 
+function getQueryString() {
+  var sp = window.location.href.split('?');
+  if (sp.length === 1) {
+    return;
+  }
+  var qs = sp[1];
+  return qs.split(',');
+}
+
 function drawCheckboxes(state) {
   var el = document.querySelector('#main-checkboxes');
   var fn = _.debounce(checkAndDraw.bind(this, state), 500);
+  var queryString = getQueryString();
   Object.keys(state).forEach(function(name) {
     var label = document.createElement('label');
     label.innerText = name;
@@ -80,7 +95,11 @@ function drawCheckboxes(state) {
     checkbox.id = name;
     checkbox.style = 'margin-right: 1em;';
     checkbox.value = name
-    checkbox.checked = true;
+    if (queryString) {
+      checkbox.checked = queryString.includes(name);
+    } else {
+      checkbox.checked = true;
+    }
     checkbox.onchange = checkAndDraw.bind(this, state);
 
     var div = document.createElement('div');
