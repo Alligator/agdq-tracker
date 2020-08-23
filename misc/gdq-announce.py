@@ -50,16 +50,16 @@ if currentGame != prevGame:
   msg = u'current game: {} | next: {} | viewers: {} | total: ${}'.format(before[-1][1], after[0][1], total[1], total[2])
   data = {
     'embeds': [{
-      'title': 'SGDQ 2019',
+      'title': 'MARATHON NAME HERE',
       'url': 'https://www.twitch.tv/gamesdonequick',
       'fields': [
         {
           'name': 'Current Game',
-          'value': before[-1][1],
+          'value': '{}\n{}'.format(before[-1][1].encode('utf-8'), before[-1][3].encode('utf-8')),
         },
         {
           'name': 'Next Game',
-          'value': '{}, {}'.format(after[0][1], nextMsg),
+          'value': '{}, {}'.format(after[0][1].encode('utf-8'), nextMsg),
         },
         {
           'name': 'Viewers',
