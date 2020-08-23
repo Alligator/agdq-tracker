@@ -1,7 +1,36 @@
 #!/bin/bash
 set -e
 
+var_unset=0
+check_var() {
+  val=$(eval "echo \${$1}")
+  if [ -z "$val" ]; then
+    echo "$1 unset!"
+    var_unset=1
+  fi
+}
+
 . ./config.sh
+
+check_var "marathon_name"
+check_var "marathon_name_full"
+check_var "marathon_nice_name"
+check_var "marathon_short_name"
+check_var "marathon_start_date"
+check_var "marathon_end_date"
+check_var "marathon_year"
+check_var "twitch_client_id"
+check_var "twitch_access_token"
+
+if [ "$var_unset" == "1" ]; then
+  echo "variables unset, exiting"
+  exit 1
+fi
+
+if [ -d "${marathon_name}" ]; then
+  echo "directory already exists, exiting"
+  exit 1
+fi
 
 echo "creating directory $marathon_name"
 mkdir $marathon_name
@@ -41,3 +70,11 @@ sed -i \
 echo "setting up pipenv"
 cd cron-job
 pipenv install
+
+echo "done!"
+
+tracker_root=$(pwd)
+echo "cron jobs:"
+echo "  * * * * * cd $tracker_root/cron-job/ && /home/alligator/.local/bin/pipenv run python get-data.py"
+echo "  */10 * * * * sleep 5; cp $tracker_root/web/$marathon_name.json $tracker_root/backup/\`date +\%FT\%T\`.json"
+echo "  * * * * * python $tracker_root/gdq-announce.py"
