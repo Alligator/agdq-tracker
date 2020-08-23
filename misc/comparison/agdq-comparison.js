@@ -1,71 +1,82 @@
-var colors = ['#e45649', '#e06c75','#50a14f', '#98c379','#c18401', '#e5c07b','#0184bc', '#61afef','#a626a4', '#c678dd','#0997b3', '#56b6c2', '#282c34']
+var colors = ['#e45649', '#e06c75','#50a14f', '#98c379','#c18401', '#e5c07b','#0184bc', '#61afef','#a626a4', '#c678dd','#0997b3', '#56b6c2', '#282c34'];
 var i = 0;
+function nextColor() {
+  var color = colors[i];
+  i = (i + 1) % colors.length;
+  return color;
+}
+
 loadData({
+  sgdq20: {
+    url: '/sgdq20/sgdq20.json',
+    start: new Date(2020, 7, 16, 15, 0),
+    color: nextColor(),
+    highlight: true,
+  },
   agdq20: {
     url: '/agdq20/agdq20.json',
     start: new Date(2020, 0, 5, 15, 0),
-    color: colors[i++],
-    highlight: true,
+    color: nextColor(),
   },
   sgdq19: {
     url: '/sgdq19/sgdq19.json',
     start: new Date(2019, 5, 23, 16, 30),
-    color: colors[i++],
+    color: nextColor(),
   },
   agdq19: {
     url: '/agdq19/agdq19.json',
     start: new Date(2019, 0, 6, 16, 30),
-    color: colors[i++],
+    color: nextColor(),
   },
   sgdq18: {
     url: '/sgdq18/sgdq18.json',
     start: new Date(2018, 5, 24, 17, 30),
-    color: colors[i++],
+    color: nextColor(),
   },
   agdq18: {
     url: '/agdq18/agdq18.json',
     start: new Date(2018, 0, 7, 17),
-    color: colors[i++],
+    color: nextColor(),
   },
   sgdq17: {
     url: '/sgdq17/sgdq17.json',
     start: new Date(2017, 6, 2, 17),
-    color: colors[i++],
+    color: nextColor(),
   },
   agdq17: {
     url: '/agdq17/agdq17.json',
     start: new Date(2017, 0, 8, 17),
-    color: colors[i++],
+    color: nextColor(),
   },
   sgdq16: {
     url: '/sgdq16/sgdq16.json',
     start: new Date(2016, 6, 3, 17),
-    color: colors[i++],
+    color: nextColor(),
   },
   agdq16: {
     url: '/agdq16/agdq16.json',
     start: new Date(2016, 0, 3, 17),
-    color: colors[i++],
+    color: nextColor(),
   },
   sgdq15: {
     url: '/sgdq15/sgdq15.json',
     start: new Date(2015, 6, 26, 17),
-    color: colors[i++],
+    color: nextColor(),
   },
   agdq15: {
     url: '/agdq15/agdq15-scraped.json',
     start: new Date(2015, 0, 4, 17),
-    color: colors[i++],
+    color: nextColor(),
   },
   sgdq14: {
     url: '/sgdq14/sgdq14.json',
     start: new Date(2014, 5, 22, 17),
-    color: colors[i++],
+    color: nextColor(),
   },
   agdq14: {
     url: '/agdq14/agdq14.json',
     start: new Date(2014, 0, 5, 17),
-    color: colors[i++],
+    color: nextColor(),
   },
 }).then(function(state) {
   drawCheckboxes(state);
