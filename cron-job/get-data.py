@@ -55,17 +55,31 @@ current_stats['viewers'].append((current_time, t, dn))
 try:
   h = requests.get('http://gamesdonequick.com/schedule', timeout=15.0).text
   html = lxml.html.fromstring(h)
-  x = html.xpath("//table[@id='runTable']/tbody/tr[not(contains(@class, 'day-split')) and not(contains(@class, 'second-row'))]")
+  x = html.xpath("//table[@id='runTable']/tbody/tr")
   # 7/29/2013 10:50:00
   # times are -5 ugh
   g = []
+  currentGame = {}
   for elm in x:
-    # tm = datetime.strptime(elm.getchildren()[0].text, '%Y-%m-%dT%H:%M:%SZ')
-    tm = parser.parse(elm.getchildren()[0].text)
-    tm = time.mktime(tm.timetuple())
-    game = elm.getchildren()[1].text
-    runners = elm.getchildren()[2].text
-    g.append([tm, game, runners])
+    if len(elm.classes) == 0:
+      # first row
+      tm = parser.parse(elm.getchildren()[0].text)
+      tm = time.mktime(tm.timetuple())
+      game = elm.getchildren()[1].text
+      runners = elm.getchildren()[2].text
+
+      currentGame = {
+        'time': tm,
+        'game': game,
+        'runners': runners
+      }
+      continue
+    elif 'second-row' in elm.classes:
+      currentGame['desc'] = elm.getchildren()[1].text
+      g.append([currentGame['time'], currentGame['game'], currentGame['runners'], currentGame['desc']])
+      continue
+    else:
+      continue
   if len(g) == 0:
     raise Exception('no games, reverting')
   current_stats['games'] = g
