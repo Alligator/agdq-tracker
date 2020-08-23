@@ -29,8 +29,11 @@ except IOError as e:
 # get viewers
 for i in range(3):
   try:
-    headers = { 'Client-ID': 'TWITCH_KEY' }
-    j = json.loads(requests.get('https://api.twitch.tv/helix/streams?user_login=gamesdonequick', headers=headers, verify=True, timeout=10.0).text)
+    headers = {
+      'Client-ID': 'TWITCH_CLIENT_ID',
+      'Authorization': 'Bearer TWITCH_ACCESS_TOKEN,
+    }
+    j = json.loads(requests.get('https://api.twitch.tv/helix/streams?user_id=22510310', headers=headers, verify=True, timeout=10.0).text)
     t = j['data'][0]['viewer_count']
     break
   except Exception as e:
