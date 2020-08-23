@@ -1,0 +1,14 @@
+- check get-data.py works
+  - schedule
+  - tracker
+  - twitch viewer count (CHECK THIS!!!)
+     - if not, https://dev.twitch.tv/docs/authentication/getting-tokens-oauth#oauth-client-credentials-flow
+- add symlink to /var/www
+- gdq-announce.py
+  - change the marathon name
+  - point it at the stats file
+  - touch /tmp/gdq-prev
+- cron jobs
+  - get-data.py
+  - backup
+  - gdq-announce
