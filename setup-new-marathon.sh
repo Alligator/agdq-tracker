@@ -40,6 +40,7 @@ cp -r cron-job $marathon_name
 cp -r web $marathon_name
 
 cd $marathon_name
+tracker_root=$(pwd)
 
 echo "setting stuff up for $marathon_nice_name"
 
@@ -73,7 +74,6 @@ pipenv install
 
 echo "done!"
 
-tracker_root=$(pwd)
 echo "cron jobs:"
 echo "  * * * * * cd $tracker_root/cron-job/ && /home/alligator/.local/bin/pipenv run python get-data.py"
 echo "  */10 * * * * sleep 5; cp $tracker_root/web/$marathon_name.json $tracker_root/backup/\`date +\%FT\%T\`.json"
