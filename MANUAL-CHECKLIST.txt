@@ -1,3 +1,4 @@
+- use twitch utils to check token or get a new one
 - check get-data.py works
   - schedule
   - tracker
@@ -5,10 +6,9 @@
      - if not, https://dev.twitch.tv/docs/authentication/getting-tokens-oauth#oauth-client-credentials-flow
 - add symlink to /var/www
 - gdq-announce.py
-  - OLD, USE GDQ BOT INSTEAD
+  - OLD, USE GDQ BOT INSTEAD ~/dev/gdq-bot
   - change the marathon name
   - point it at the stats file
-  - touch /tmp/gdq-prev
 - cron jobs
   - get-data.py
   - backup

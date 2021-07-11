@@ -7,11 +7,21 @@ function nextColor() {
 }
 
 loadData({
+  sgdq21: {
+    url: '/sgdq21/sgdq21.json',
+    start: new Date(2021, 6, 4, 15, 30),
+    color: nextColor(),
+    highlight: true,
+  },
+  agdq21: {
+    url: '/agdq21/agdq21.json',
+    start: new Date(2021, 0, 3, 16, 30),
+    color: nextColor(),
+  },
   sgdq20: {
     url: '/sgdq20/sgdq20.json',
     start: new Date(2020, 7, 16, 15, 0),
     color: nextColor(),
-    highlight: true,
   },
   agdq20: {
     url: '/agdq20/agdq20.json',
