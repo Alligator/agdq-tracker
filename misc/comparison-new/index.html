@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <!-- <script type="text/javascript" src="agdq.js"></script> -->
+    <style>
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  background-color: #333;
+  color: #eee;
+  font-size: 12pt;
+  padding: 0;
+  margin: 0;
+  line-height: 1.35;
+}
+.x.axis {
+  font-size: 10pt;
+}
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #555;
+  shape-rendering: crispEdges;
+}
+
+.line {
+  fill: none;
+  stroke-width: 1.5px;
+}
+
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+
+.focusline {
+  stroke-width: 1px;
+  fill: none;
+  stroke: #ddd;
+}
+
+#main-chart, #games-chart {
+  fill: #999;
+  font-size: 12pt;
+}
+
+#main-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tooltip {   
+  pointer-events: none;
+  position: absolute;           
+  background-color: rgba(0, 0, 0, 0.5);
+  font-size: 10pt;
+  color: white;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  min-width: 150px;
+  max-width: 150px;
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.tip-game {
+  margin: 0;
+  padding: .5em 1em 0 1em;
+}
+
+.tip-viewers, .tip-total {
+  padding: .45em 0 .5em 0;
+  display: inline-block;
+  width: 50%;
+  box-sizing: border-box;
+    flex-grow 1;
+}
+.tip-viewers { color: #F8BBD0; }
+.tip-total   { color: #C5CAE9; }
+
+.tip-label {
+  text-transform: lowercase;
+  font-variant: small-caps;
+  flex-grow 0;
+}
+
+a, a:visited {
+  color: dodgerblue;
+}
+    </style>
+    <title>GDQ Comparison - alligator</title>
+  </head>
+  <body>
+    <div style="display: flex; flex-direction: column; height: 100vh; width: 100vw; padding: 10px; box-sizing: border-box">
+      <header style="flex-grow: 0; margin-bottom: 1rem;">
+        <a href="http://gamesdonequick.com/">Games Done Quick</a> Comparison of donations over time
+      </header>
+
+      <div style="flex-grow: 1; display: flex; flex-direction: column;">
+        <div id="main-checkboxes"></div>
+        <div style="flex-grow: 1" id="main-chart"></div>
+      </div>
+
+      <footer style="flex-grow: 0">
+        <a href="http://alligatr.co.uk">alligator 2021</a>
+      </footer>
+
+      <script type="text/javascript" src="agdq-comparison.js"></script>
+    </div>
+  </body>
+</html>
+

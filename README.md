@@ -44,10 +44,12 @@ with only minor tweaks, so it's here to stay I guess.
 ## other stuff
 
 `misc/comparison` contains the code for the [comparison chart](https://irc.alligatr.co.uk/agdq-comparison/).
-This was hacked together quickly and it shows. I've fixed it up a couple of
-times over the years to make it less dog slow but it's still very rough. It
-took about 30 minutes to smash together and tends to be more popular than the
-main tracker come marathon time, so there you go.
+This was hacked together quickly and it shows.
+
+`misc/comparison-new` contains the code for the [newer comparison chart](https://irc.alligatr.co.uk/agdq-comparison-new/).
+This is also hacked together, but is slightly more useable.
+
+The newest comparsion chart lives in [it's own repository](https://github.com/Alligator/agdq-comparison-uplot).
 
 `misc/original-tracker` contains the code for the [original tracker](https://irc.alligatr.co.uk/sgdq)
 , which used the google charts API instead of d3.
