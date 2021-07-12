@@ -49,7 +49,7 @@ This was hacked together quickly and it shows.
 `misc/comparison-new` contains the code for the [newer comparison chart](https://irc.alligatr.co.uk/agdq-comparison-new/).
 This is also hacked together, but is slightly more useable.
 
-The newest comparsion chart lives in [it's own repository](https://github.com/Alligator/agdq-comparison-uplot).
+The newest comparison chart lives in [it's own repository](https://github.com/Alligator/agdq-comparison-uplot).
 
 `misc/original-tracker` contains the code for the [original tracker](https://irc.alligatr.co.uk/sgdq)
 , which used the google charts API instead of d3.
