@@ -18,7 +18,7 @@ filename = '../web/MARATHON_NAME.json'
 current_time = time.time()
 start_date = parser.parse('START_DATE')
 end_date = parser.parse('END_DATE')
-if datetime.utcnow() < start_date or datetime.utcnow() > end_date:
+if 'force' not in sys.argv and (datetime.utcnow() < start_date or datetime.utcnow() > end_date):
   sys.exit(0)
 
 try:
@@ -34,6 +34,9 @@ for i in range(3):
       'Authorization': 'Bearer TWITCH_ACCESS_TOKEN',
     }
     j = json.loads(requests.get('https://api.twitch.tv/helix/streams?user_id=22510310', headers=headers, verify=True, timeout=10.0).text)
+    if len(j['data']) == 0:
+        t = None
+        break;
     t = j['data'][0]['viewer_count']
     break
   except Exception as e:
@@ -61,24 +64,22 @@ try:
   g = []
   currentGame = {}
   for elm in x:
-    if len(elm.classes) == 0:
+    if 'second-row' in elm.classes:
+      currentGame['desc'] = elm.getchildren()[1].text
+      g.append([currentGame['time'], currentGame['game'], currentGame['runners'], currentGame['desc']])
+      continue
+    else:
       # first row
       tm = parser.parse(elm.getchildren()[0].text)
       tm = time.mktime(tm.timetuple())
-      game = elm.getchildren()[1].text
-      runners = elm.getchildren()[2].text
+      game = elm.getchildren()[1].text_content().strip()
+      runners = elm.getchildren()[2].text_content().strip()
 
       currentGame = {
         'time': tm,
         'game': game,
         'runners': runners
       }
-      continue
-    elif 'second-row' in elm.classes:
-      currentGame['desc'] = elm.getchildren()[1].text
-      g.append([currentGame['time'], currentGame['game'], currentGame['runners'], currentGame['desc']])
-      continue
-    else:
       continue
   if len(g) == 0:
     raise Exception('no games, reverting')
