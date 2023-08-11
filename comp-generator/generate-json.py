@@ -1,6 +1,9 @@
 import re
 import json
 import math
+import sys
+import os
+import argparse
 from pprint import pprint
 from glob import glob
 from datetime import datetime
@@ -12,7 +15,12 @@ stats = {
     'donations': [],
 }
 
-def add_all_marathons():
+parser = argparse.ArgumentParser()
+parser.add_argument('--glob', required=True, action='append')
+parser.add_argument('output_file', type=argparse.FileType('w'))
+args = parser.parse_args()
+
+def add_all_marathons(globs):
     # the general idea
     # 1. read all the json files
     # 2. find the earliest timestamp, use it as the root
@@ -21,10 +29,15 @@ def add_all_marathons():
     # 5. truncate each ts to 5 minute accuracy
     # 6. store the largest no. of viewers and donations for each 5 min bucket
 
-    marathon_files = glob('/home/alligator/dev/agdq-stats/*gdq*.json')
+    marathon_files = []
+    for pat in globs:
+        marathon_files += glob(pat)
+
+    order = ['agdq', 'frost', 'sgdq', 'flame']
     def sort_key(f):
-        m = re.search(r'([as])gdq(\d\d)', f)
-        return m.group(2) + m.group(1)
+        m = re.search(r'([a-z]+)(\d\d)', f)
+        order_idx = order.index(m.group(1))
+        return m.group(2) + str(order_idx)
 
     marathons = []
     marathon_names = []
@@ -34,11 +47,10 @@ def add_all_marathons():
             break
         marathon = json.load(open(file, 'r'))
         marathons.append(marathon)
-        m = re.search(r'([as])gdq(\d\d)', file)
-        marathon_names.append(m.group(0))
+        marathon_names.append(os.path.basename(file).split('.')[0])
 
     # find the earliest start time
-    earliest_start = min(m['viewers'][0][0] for m in marathons)
+    earliest_start = min(m['viewers'][0][0] for m in marathons if len(m['viewers']) > 0)
 
     # find 3pm on that day, that's the root timestamp
     root_ts = datetime.fromtimestamp(earliest_start) \
@@ -60,6 +72,8 @@ def add_all_marathons():
 
     for i, marathon in enumerate(marathons):
         print(datetime.now(), 'reading', marathon_names[i])
+        if len(marathon['viewers']) == 0:
+            continue
         viewers.append([None] * len(timestamps))
         donations.append([None] * len(timestamps))
 
@@ -123,5 +137,5 @@ def add_all_marathons():
         'meta': meta,
     }
 
-stats = add_all_marathons()
-json.dump(stats, open('output.json', 'w'), indent=2)
+stats = add_all_marathons(args.glob)
+json.dump(stats, args.output_file)
