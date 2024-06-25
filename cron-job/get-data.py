@@ -56,37 +56,26 @@ current_stats['viewers'].append((current_time, t, dn))
 
 # get schedule
 try:
-  h = requests.get('http://gamesdonequick.com/schedule', timeout=15.0).text
-  html = lxml.html.fromstring(h)
-  x = html.xpath("//table[@id='runTable']/tbody/tr")
-  # 7/29/2013 10:50:00
-  # times are -5 ugh
-  g = []
-  currentGame = {}
-  for elm in x:
-    if 'second-row' in elm.classes:
-      currentGame['desc'] = elm.getchildren()[1].text
-      g.append([currentGame['time'], currentGame['game'], currentGame['runners'], currentGame['desc']])
-      continue
-    else:
-      # first row
-      tm = parser.parse(elm.getchildren()[0].text)
-      tm = time.mktime(tm.timetuple())
-      game = elm.getchildren()[1].text_content().strip()
-      runners = elm.getchildren()[2].text_content().strip()
+  resp = requests.get('https://gamesdonequick.com/tracker/api/v2/events/MARATHON_ID/runs/')
+  resp.raise_for_status()
+  j = json.loads(resp.text)
 
-      currentGame = {
-        'time': tm,
-        'game': game,
-        'runners': runners
-      }
+  games = []
+  for run in j['results']:
+    if run['type'] != 'speedrun':
       continue
-  if len(g) == 0:
+    name = run['display_name']
+    tm = parser.parse(run['starttime']).timestamp()
+    runners = ', '.join(r['name'] for r in run['runners'])
+    category = run['category']
+    games.append([tm, name, runners, category])
+
+  if len(games) == 0:
     raise Exception('no games, reverting')
-  current_stats['games'] = g
+  current_stats['games'] = games
 except Exception as e:
   # on error don't change the games
-  sys.stderr.write('games\n' + str(e))
+  sys.stderr.write('games ' + str(e) + '\n')
   pass
 
 json.dump(current_stats, open(filename, 'w'))

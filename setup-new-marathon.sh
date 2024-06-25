@@ -19,6 +19,7 @@ check_var "marathon_short_name"
 check_var "marathon_start_date"
 check_var "marathon_end_date"
 check_var "marathon_year"
+check_var "marathon_id"
 check_var "twitch_client_id"
 check_var "twitch_access_token"
 
@@ -50,6 +51,7 @@ sed -i \
   -e "s/MARATHON_NAME/$marathon_name/g" \
   -e "s/START_DATE/$marathon_start_date/g" \
   -e "s/END_DATE/$marathon_end_date/g" \
+  -e "s/MARATHON_ID/$marathon_id/g" \
   -e "s/TWITCH_CLIENT_ID/$twitch_client_id/g" \
   -e "s/TWITCH_ACCESS_TOKEN/$twitch_access_token/g" \
   ./cron-job/get-data.py
