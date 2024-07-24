@@ -16,6 +16,7 @@ stats = {
 }
 
 parser = argparse.ArgumentParser()
+parser.add_argument('--name', required=True)
 parser.add_argument('--glob', required=True, action='append')
 parser.add_argument('output_file', type=argparse.FileType('w'))
 args = parser.parse_args()
@@ -33,7 +34,7 @@ def add_all_marathons(globs):
     for pat in globs:
         marathon_files += glob(pat)
 
-    order = ['agdq', 'frost', 'sgdq', 'flame']
+    order = ['agdq', 'frost', 'sgdq', 'flame', 'gdqx']
     def sort_key(f):
         m = re.search(r'([a-z]+)(\d\d)', f)
         order_idx = order.index(m.group(1))
@@ -60,7 +61,8 @@ def add_all_marathons(globs):
     # generate the timestamps
     # every 5 mins for 7 days
     timestamps = []
-    for offset in range(0, 60 * 60 * 24 * 7, 5 * 60):
+    days = 3 if 'gdqx' in file else 7
+    for offset in range(0, 60 * 60 * 24 * days, 5 * 60):
         timestamps.append(root_ts + offset)
 
     timestamp_map = { int(ts): i for i, ts in enumerate(timestamps) }
@@ -73,6 +75,8 @@ def add_all_marathons(globs):
     for i, marathon in enumerate(marathons):
         print(datetime.now(), 'reading', marathon_names[i])
         if len(marathon['viewers']) == 0:
+            viewers.append([])
+            donations.append([])
             continue
         viewers.append([None] * len(timestamps))
         donations.append([None] * len(timestamps))
@@ -130,6 +134,7 @@ def add_all_marathons(globs):
         })
 
     return {
+        'name': args.name,
         'marathons': marathon_names,
         'ts': timestamps,
         'viewers': viewers,
