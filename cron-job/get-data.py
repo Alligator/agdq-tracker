@@ -15,7 +15,7 @@ from pprint import pprint
 arg_parser = argparse.ArgumentParser()
 
 arg_parser.add_argument('--name', required=True)
-arg_parser.add_argument('--type', required=True, choices=['gdq', 'gdqx', 'ff'])
+arg_parser.add_argument('--type', required=True, choices=['gdq', 'gdqx', 'ff', 'btb', 'gdqueer'])
 arg_parser.add_argument(
     '--start-date',
     required=True,
@@ -31,6 +31,7 @@ arg_parser.add_argument('--twitch-client-id', required=True)
 arg_parser.add_argument('--twitch-access-token', required=True)
 arg_parser.add_argument('--tracker-marathon-name', required=True)
 arg_parser.add_argument('--tracker-marathon-id', required=True)
+arg_parser.add_argument('--yt-api-key', required=True)
 arg_parser.add_argument('output_file')
 
 args = arg_parser.parse_args()
@@ -41,6 +42,7 @@ end_date = args.end_date
 now = datetime.utcnow().timestamp()
 if not args.force and (now < start_date.timestamp() or now > end_date.timestamp()):
   sys.exit(0)
+
 
 try:
   current_stats = json.load(open(args.output_file))
@@ -57,7 +59,7 @@ for i in range(3):
   try:
     headers = {
       'Client-ID': args.twitch_client_id,
-      'Authorization': args.twitch_access_token,
+      'Authorization': f'Bearer {args.twitch_access_token}',
     }
     resp = requests.get('https://api.twitch.tv/helix/streams?user_id=22510310', headers=headers, verify=True, timeout=10.0)
     resp.raise_for_status()
@@ -72,6 +74,28 @@ for i in range(3):
     sys.stderr.write('viewers ' + repr(e) + '\n')
     t = None
 
+# get yt viewers
+def get_yt_viewers(video_id):
+    params = {
+        'id': video_id,
+        'key': args.yt_api_key,
+        'part': 'liveStreamingDetails',
+    }
+    resp = requests.get('https://www.googleapis.com/youtube/v3/videos', params=params)
+    j = resp.json()
+    stream = j['items'][0]['liveStreamingDetails']
+    return stream
+
+try:
+    video_id = 'IzylNJUIGwc'
+    stream = get_yt_viewers(video_id)
+    if 'concurrentViewers' not in stream:
+        raise Exception(f'concurrentViewers missing in yt response: {json.dumps(stream)}')
+    yt_viewers = int(stream['concurrentViewers'])
+except Exception as e:
+    sys.stderr.write('yt viewers ' + repr(e) + '\n')
+    yt_viewers = None
+
 # get donations
 try:
   j = json.loads(requests.get(f'https://gamesdonequick.com/tracker/event/{args.tracker_marathon_name}?json').text)
@@ -80,7 +104,7 @@ except Exception as e:
   sys.stderr.write('donations' + repr(e) + '\n')
   dn = None
 
-current_stats['viewers'].append((current_time, t, dn))
+current_stats['viewers'].append((current_time, t, dn, yt_viewers))
 
 # get schedule
 try:

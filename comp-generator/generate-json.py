@@ -47,6 +47,11 @@ def add_all_marathons(globs):
         if 'sgdq14' in file:
             break
         marathon = json.load(open(file, 'r'))
+        if 'sgdq17' in file:
+            # sgdq17 hack
+            # this has an extra day's worth of data at the start
+            # chop it off
+            marathon['viewers'] = marathon['viewers'][1200:]
         marathons.append(marathon)
         marathon_names.append(os.path.basename(file).split('.')[0])
 
@@ -69,6 +74,7 @@ def add_all_marathons(globs):
 
     # do the dang thing
     viewers = []
+    viewers_yt = []
     donations = []
     meta = []
 
@@ -76,13 +82,16 @@ def add_all_marathons(globs):
         print(datetime.now(), 'reading', marathon_names[i])
         if len(marathon['viewers']) == 0:
             viewers.append([])
+            viewers_yt.append([])
             donations.append([])
             continue
         viewers.append([None] * len(timestamps))
+        viewers_yt.append([None] * len(timestamps))
         donations.append([None] * len(timestamps))
 
         # find this marathon's 3pm start time and it's offset to the root ts
-        start_time = marathon['viewers'][0][0]
+        # start_time = marathon['viewers'][0][0]
+        start_time = marathon['games'][0][0]
         start_time_threepm = datetime.fromtimestamp(start_time) \
             .replace(hour=15, minute=0, second=0, microsecond=0) \
             .timestamp()
@@ -93,11 +102,14 @@ def add_all_marathons(globs):
         max_viewers_ts = 0
 
         last_index = 0
-        for v in marathon['viewers']:
-            ts, v, d = v
+        for vv in marathon['viewers']:
+            ts = vv[0]
+            v = vv[1]
+            d = vv[2]
             # truncate ts to 5 minutes
             truncated_ts = math.floor(ts / (5 * 60)) * (5 * 60)
             offset_ts = int(truncated_ts - seconds_to_offset)
+
             if offset_ts in timestamp_map:
                 index = timestamp_map[offset_ts]
                 if v != None:
@@ -106,6 +118,12 @@ def add_all_marathons(globs):
                     if v > max_viewers:
                         max_viewers = v
                         max_viewers_ts = int(ts)
+
+                if len(vv) == 4 and vv[3] != None:
+                    yt_v = vv[3]
+                    existing_viewers = viewers_yt[-1][index]
+                    viewers_yt[-1][index] = max(existing_viewers if existing_viewers != None else 0, yt_v)
+
                 if d != None:
                     existing_donations = donations[-1][index]
                     donations[-1][index] = max(existing_donations if existing_donations != None else 0, d)
@@ -114,6 +132,7 @@ def add_all_marathons(globs):
 
         # trim off the end
         viewers[-1] = viewers[-1][:last_index]
+        viewers_yt[-1] = viewers_yt[-1][:last_index]
 
         # extend the last donation count until the end
         for i in range(last_index, len(donations[-1])):
@@ -138,6 +157,7 @@ def add_all_marathons(globs):
         'marathons': marathon_names,
         'ts': timestamps,
         'viewers': viewers,
+        'viewers_yt': viewers_yt,
         'donations': donations,
         'meta': meta,
     }
