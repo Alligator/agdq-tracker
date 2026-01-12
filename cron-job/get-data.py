@@ -98,17 +98,17 @@ except Exception as e:
 
 # get donations
 try:
-  j = json.loads(requests.get(f'https://gamesdonequick.com/tracker/event/{args.tracker_marathon_name}?json').text)
-  dn = float(j['agg']['amount'])
+  j = json.loads(requests.get(f'https://tracker.gamesdonequick.com/tracker/api/v2/events/{args.tracker_marathon_id}/?totals').text)
+  dn = float(j['donation_total'])
 except Exception as e:
-  sys.stderr.write('donations' + repr(e) + '\n')
+  sys.stderr.write('donations ' + repr(e) + '\n')
   dn = None
 
 current_stats['viewers'].append((current_time, t, dn, yt_viewers))
 
 # get schedule
 try:
-  resp = requests.get(f'https://gamesdonequick.com/tracker/api/v2/events/{args.tracker_marathon_id}/runs/')
+  resp = requests.get(f'https://tracker.gamesdonequick.com/tracker/api/v2/events/{args.tracker_marathon_id}/runs/')
   resp.raise_for_status()
   j = json.loads(resp.text)
 
