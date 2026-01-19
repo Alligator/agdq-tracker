@@ -5,50 +5,70 @@
   <title>alligator's GDQ stats</title>
   <style>
 :root {
-  /* Very dark navy */
   --color-midnight:      #1a1c2c;
-  /* Deep plum purple */
   --color-plum:          #5d275d;
-  /* Muted crimson red */
   --color-crimson:       #b13e53;
-  /* Warm coral orange */
   --color-coral:         #ef7d57;
-  /* Soft sunflower yellow */
   --color-sunflower:     #ffcd75;
-  /* Bright lime green */
   --color-lime:          #a7f070;
-  /* Rich forest green */
   --color-forest:        #38b764;
-  /* Deep teal blue */
   --color-teal:          #257179;
-  /* Classic indigo blue */
   --color-indigo:        #29366f;
-  /* Vivid royal blue */
   --color-royal-blue:    #3b5dc9;
-  /* Clear sky blue */
   --color-sky-blue:      #41a6f6;
-  /* Light aqua cyan */
   --color-aqua:          #73eff7;
-  /* Off-white (alabaster) */
   --color-alabaster:     #f4f4f4;
-  /* Cool steel blue */
-  --color-steel-blue:    #94b0c2;
-  /* Dusty slate blue */
+  --color-steel-blue:    #b4d0e2;
   --color-slate-blue:    #566c86;
-  /* Dark charcoal gray */
   --color-charcoal:      #333c57;
+
+  --color-bg:   var(--color-midnight);
+  --color-bg-1: #2a344c;
+  --color-fg: var(--color-steel-blue);
+
+  --event-l: 66%;
+
+  --agdq-h: 118;
+  --agdq-s: 55%;
+
+  --b2b-h: 335;
+  --b2b-s: 38%;
+
+  --frost-h: 206;
+  --frost-s: 55%;
+
+  --sgdq-h: 38;
+  --sgdq-s: 48%;
+
+  --flame-h: 16;
+  --flame-s: 60%;
+
+  --gdqx-h: 175;
+  --gdqx-s: 45%;
+
+  --gdqueer-h: 281;
+  --gdqueer-s: 45%;
+
+  --agdq:    hsl(var(--agdq-h)    var(--agdq-s)    var(--event-l));
+  --b2b:     hsl(var(--b2b-h)     var(--b2b-s)     var(--event-l));
+  --frost:   hsl(var(--frost-h)   var(--frost-s)   var(--event-l));
+  --sgdq:    hsl(var(--sgdq-h)    var(--sgdq-s)    var(--event-l));
+  --flame:   hsl(var(--flame-h)   var(--flame-s)   var(--event-l));
+  --gdqx:    hsl(var(--gdqx-h)    var(--gdqx-s)    var(--event-l));
+  --gdqueer: hsl(var(--gdqueer-h) var(--gdqueer-s) var(--event-l));
 }
 
+
 html {
-  background-color: #1a1c2c;
+  background-color: var(--color-bg);
 }
 body {
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
-  color: var(--color-alabaster);
-  max-width: 76ex;
+  color: var(--color-fg);
+  max-width: 800px;
   margin: 0 auto;
   padding: 0 1em;
-  font-size: 14pt;
+  font-size: 12pt;
 }
 
 footer {
@@ -75,15 +95,14 @@ a, a:visited {
   align-items: baseline;
   gap: 1rem;
   margin-bottom: 1rem;
-  background-color: var(--color-charcoal);
+  border: 1.5px solid var(--color-charcoal);
+  box-shadow: 0px 4px var(--color-charcoal);
   padding: 0 1rem;
   border-radius: 8px;
 }
 
 .marathons {
   display: grid;
-  /* grid-template-columns: repeat(auto-fit, minmax(160px, max-content)); */
-  /* grid-template-columns: 1fr 1fr 1fr; */
   grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
   gap: 1rem;
   flex: 1;
@@ -99,48 +118,45 @@ a, a:visited {
   transform: scale(1.05);
 }
 .big-btn a {
-  --bg-color: var(--color-royal-blue);
-  --shadow-color: var(--color-indigo);
   display: block;
   border-radius: 8px;
-  background-color: var(--bg-color);
-  box-shadow: 0px 5px var(--shadow-color);
+  border: 1px solid var(--bg-color);
   padding: .65rem 1rem;
   white-space: pre;
   font-weight: bold;
+  background-color: var(--color-bg);
+  color: var(--bg-color);
+  box-shadow: 0px 4px var(--bg-color);
 }
-.agdq a {
-  --bg-color: var(--color-lime);
-  --shadow-color: var(--color-forest);
-  color: var(--color-teal);
-}
-.sgdq a {
-  --bg-color: var(--color-sunflower);
-  --shadow-color: var(--color-coral);
-  color: var(--color-crimson);
-}
-.frost a {
-  --bg-color: var(--color-sky-blue);
-  --shadow-color: var(--color-royal-blue);
-  color: var(--color-indigo);
-}
-.flame a {
-  --bg-color: var(--color-coral);
-  --shadow-color: var(--color-crimson);
-  color: var(--color-midnight);
-}
-.gdqx a {
-  --bg-color: var(--color-slate-blue);
-  --shadow-color: #364c79;
-  color: var(--color-alabaster);
-}
-.btb a {
-  --bg-color: var(--color-crimson);
-  --shadow-color: var(--color-plum);
-  color: #f1bea3;
-}
+.agdq    a { --bg-color: var(--agdq); }
+.sgdq    a { --bg-color: var(--sgdq); }
+.frost   a { --bg-color: var(--frost); }
+.flame   a { --bg-color: var(--flame); }
+.gdqx    a { --bg-color: var(--gdqx); }
+.btb     a { --bg-color: var(--b2b); }
+.gdqueer a { --bg-color: var(--gdqueer); }
+
 .gdqueer a {
-  background-image: linear-gradient(90deg,
+  border: none;
+  box-shadow: 0px 5px var(--bg-color);
+}
+.gdqueer {
+  border: solid 1px transparent;
+  border-radius: 8px;
+  background-clip: padding-box;
+  position: relative;
+}
+.gdqueer:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  margin: -1px;
+  border-radius: inherit;
+  background: linear-gradient(160deg,
     #cc4f4f 0%,   #cc4f4f 16.6%,  /* red */
     #e0813f 16.6%, #e0813f 33.2%, /* orange */
     #d9c63e 33.2%, #d9c63e 49.8%, /* yellow */
@@ -148,39 +164,11 @@ a, a:visited {
     #6785ce 66.4%, #6785ce 83%,   /* blue */
     #a26abb 83%,   #a26abb 100%   /* purple */
   );
-  --shadow-color: var(--color-plum);
-  position: relative;
-}
-
-.gdqueer a > span {
-  position: relative;
-  z-index: 1;
-  color: var(--color-alabaster);
-}
-
-.gdqueer a::before {
-  content: "";
-  position: absolute;
-  z-index: 0;                   /* sit under the text span */
-  pointer-events: none;
-
-  /* centered strip */
-  /* left: 1.6em; */
-  /* right: 1.6em; */
-  width: 8ex;
-  top: 50%;
-  height: 1.4em;                /* roughly one line tall */
-  transform: translateY(-50%);
-
-  background: rgba(0, 0, 0, 0.1);   /* lighten for readability */
-  border-radius: .35em;
-  filter: blur(8px);
 }
   </style>
 </head>
 <body>
   <h1>alligator's GDQ stats</h1>
-  <h2>marathons</h2>
 
   <div class="year">
     <h3>2026</h3>
@@ -310,7 +298,7 @@ a, a:visited {
   <p>
     <ul>
       <li><a href="/comp/gdq/">GDQ</a></li>
-      <li><a href="/comp/ff/">Frost/Flame Fatales</a></li>
+      <li><a href="/comp/ff/">Frame Fatales</a></li>
       <li><a href="/comp/gdqx/">GDQx</a></li>
     </ul>
   </p>
