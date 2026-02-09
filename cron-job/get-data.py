@@ -5,6 +5,7 @@ import requests
 import re
 import configparser
 import argparse
+import os.path
 
 import lxml.html
 from datetime import datetime, timedelta
@@ -83,15 +84,69 @@ def get_yt_viewers(video_id):
     }
     resp = requests.get('https://www.googleapis.com/youtube/v3/videos', params=params)
     j = resp.json()
-    stream = j['items'][0]['liveStreamingDetails']
-    return stream
 
+    items = j.get('items', [])
+    if not items:
+        return None
+    return items[0]['liveStreamingDetails']
+
+def get_yt_video_id(channel_id):
+    # at most every 15 mins
+    now = datetime.utcnow()
+    if now.minute % 15 != 0:
+        return None
+
+    params = {
+        'part': 'id',
+        'channelId': channel_id,
+        'eventType': 'live',
+        'type': 'video',
+        'maxResults': '1',
+        'key': args.yt_api_key,
+        'fields': 'items/id/videoId',
+    }
+    resp = requests.get('https://www.googleapis.com/youtube/v3/search', params=params)
+    resp.raise_for_status()
+    j = resp.json()
+
+    items = j.get('items', [])
+    if not items:
+        return None
+    return items[0]['id']['videoId']
+
+def get_cached_yt_video_id():
+    if os.path.exists('/tmp/gdq-yt-id'):
+        id = open('/tmp/gdq-yt-id').read()
+        if len(id) == 0:
+            return None
+        return id
+    return None
+
+def set_cached_yt_video_id(video_id):
+    with open('/tmp/gdq-yt-id', 'w') as f:
+        if video_id is not None:
+            f.write(video_id)
+
+# yt_viewers = None
 try:
-    video_id = 'IzylNJUIGwc'
-    stream = get_yt_viewers(video_id)
-    if 'concurrentViewers' not in stream:
-        raise Exception(f'concurrentViewers missing in yt response: {json.dumps(stream)}')
-    yt_viewers = int(stream['concurrentViewers'])
+    video_id = get_cached_yt_video_id()
+
+    # no cached video id, try to get a new one
+    if video_id is None:
+        video_id = get_yt_video_id('UCI3DTtB-a3fJPjKtQ5kYHfA')
+        set_cached_yt_video_id(video_id)
+
+    # still no video id, not live
+    if video_id is None:
+        yt_viewers = None
+    else:
+        stream = get_yt_viewers(video_id)
+        if stream is not None and 'concurrentViewers' in stream:
+            yt_viewers = int(stream['concurrentViewers'])
+        else:
+            yt_viewers = None
+            # clear the cache so we re-fetch next time
+            set_cached_yt_video_id('')
 except Exception as e:
     sys.stderr.write('yt viewers ' + repr(e) + '\n')
     yt_viewers = None
