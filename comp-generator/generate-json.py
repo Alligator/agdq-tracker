@@ -34,7 +34,7 @@ def add_all_marathons(globs):
     for pat in globs:
         marathon_files += glob(pat)
 
-    order = ['agdq', 'frost', 'sgdq', 'flame', 'gdqx']
+    order = ['agdq', 'frost', 'sgdq', 'flame', 'gdqx', 'btb']
     def sort_key(f):
         m = re.search(r'([a-z]+)(\d\d)', f)
         order_idx = order.index(m.group(1))
@@ -66,7 +66,11 @@ def add_all_marathons(globs):
     # generate the timestamps
     # every 5 mins for 7 days
     timestamps = []
-    days = 3 if 'gdqx' in file else 7
+    days = 7
+    if 'gdqx' in file:
+        days = 3
+    if 'btb' in file:
+        days = 4
     for offset in range(0, 60 * 60 * 24 * days, 5 * 60):
         timestamps.append(root_ts + offset)
 
